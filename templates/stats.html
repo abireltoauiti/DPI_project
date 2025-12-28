@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualisation des Menaces</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #1e1e2e; color: white; padding: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .back-btn { background: #2196F3; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; }
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .chart-card {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        h3 { color: #64B5F6; margin-top: 0; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📊 Statistiques de Menaces</h1>
+        <a href="/dashboard" class="back-btn">← Retour Dashboard</a>
+    </div>
+
+    <div class="charts-container">
+        <div class="chart-card">
+            <h3>🛡️ Répartition des Risques</h3>
+            <canvas id="threatPieChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <h3>📈 Intensité des Menaces (Score)</h3>
+            <canvas id="scoreBarChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        async function loadCharts() {
+            const response = await fetch('/api/dpi/stats');
+            const data = await response.json();
+
+            // Pie Chart
+            new Chart(document.getElementById('threatPieChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Sain', 'Avertissement', 'Critique'],
+                    datasets: [{
+                        data: [data.clean, data.warnings, data.critical],
+                        backgroundColor: ['#4CAF50', '#FFC107', '#f44336'],
+                        borderColor: '#1e1e2e',
+                        borderWidth: 2
+                    }]
+                },
+                options: { plugins: { legend: { position: 'bottom', labels: { color: '#fff' } } } }
+            });
+
+            // Bar Chart (Exemple simple)
+            new Chart(document.getElementById('scoreBarChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Total Menaces cumulées'],
+                    datasets: [{
+                        label: 'Score de risque total',
+                        data: [data.score],
+                        backgroundColor: '#2196F3'
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: { beginAtZero: true, ticks: { color: '#fff' } },
+                        x: { ticks: { color: '#fff' } }
+                    }
+                }
+            });
+        }
+
+        window.onload = loadCharts;
+    </script>
+</body>
+</html>

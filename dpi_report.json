@@ -1,0 +1,10 @@
+{
+    "total_packets": 2072,
+    "critical_alerts": 0,
+    "warning_alerts": 0,
+    "top_targets": {
+        "10.2.21.101": 1311,
+        "72.52.136.210": 660,
+        "192.168.61.129": 39
+    }
+}
