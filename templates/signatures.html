@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Signatures - DPI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            color: #1e3c72;
+            font-size: 28px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #2196F3;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .info-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .info-card {
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .info-card h3 {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .info-card .value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+        
+        .threshold-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .threshold-control {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .threshold-control input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100px;
+        }
+        
+        .signatures-grid {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .signature-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 5px solid;
+            transition: all 0.3s;
+        }
+        
+        .signature-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+        
+        .signature-card.severity-critical {
+            border-left-color: #d32f2f;
+        }
+        
+        .signature-card.severity-high {
+            border-left-color: #f57c00;
+        }
+        
+        .signature-card.severity-medium {
+            border-left-color: #fbc02d;
+        }
+        
+        .signature-card.severity-low {
+            border-left-color: #388e3c;
+        }
+        
+        .signature-card.disabled {
+            opacity: 0.5;
+            background: #f5f5f5;
+        }
+        
+        .signature-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+        
+        .signature-title {
+            flex: 1;
+        }
+        
+        .signature-title h3 {
+            color: #1e3c72;
+            margin-bottom: 5px;
+        }
+        
+        .signature-title .category {
+            display: inline-block;
+            padding: 3px 10px;
+            background: #e3f2fd;
+            color: #1976d2;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+        
+        .severity-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .severity-critical {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+        
+        .severity-high {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+        
+        .severity-medium {
+            background: #fffde7;
+            color: #f9a825;
+        }
+        
+        .severity-low {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+        
+        .signature-details {
+            margin: 15px 0;
+        }
+        
+        .signature-details p {
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .regex-box {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #333;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        
+        .score-display {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #1e3c72;
+            color: white;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #4CAF50;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: white;
+            font-size: 18px;
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ Gestion des Signatures DPI</h1>
+            <div class="nav-links">
+                <a href="/dashboard" class="btn btn-primary">← Dashboard</a>
+                <button class="btn btn-secondary" onclick="reloadSignatures()">🔄 Recharger</button>
+                <a href="/logout" class="btn btn-danger">Déconnexion</a>
+            </div>
+        </div>
+
+        <div id="message" class="message"></div>
+
+        <div class="info-panel">
+            <h2>Vue d'ensemble</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Total Signatures</h3>
+                    <div class="value" id="total-count">-</div>
+                </div>
+                <div class="info-card">
+                    <h3>Actives</h3>
+                    <div class="value" id="enabled-count">-</div>
+                </div>
+                <div class="info-card">
+                    <h3>Version</h3>
+                    <div class="value" id="version" style="font-size: 24px;">-</div>
+                </div>
+                <div class="info-card">
+                    <h3>Dernière MAJ</h3>
+                    <div class="value" id="last-updated" style="font-size: 18px;">-</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="threshold-section">
+            <h2>Seuil d'Alerte</h2>
+            <div class="threshold-control">
+                <label>Score minimum pour alerte critique:</label>
+                <input type="number" id="threshold-input" min="1" max="20" value="5">
+                <button class="btn btn-primary" onclick="updateThreshold()">Mettre à jour</button>
+            </div>
+        </div>
+
+        <div id="loading" class="loading">Chargement des signatures...</div>
+        
+        <div id="signatures-container" class="signatures-grid" style="display: none;">
+            <!-- Signatures loaded dynamically -->
+        </div>
+    </div>
+
+    <script>
+        let signaturesData = null;
+
+        function showMessage(text, type) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = `message ${type}`;
+            msg.style.display = 'block';
+            setTimeout(() => {
+                msg.style.display = 'none';
+            }, 5000);
+        }
+
+        async function loadSignatures() {
+            try {
+                const response = await fetch('/api/signatures/list');
+                const data = await response.json();
+                
+                if (data.error) {
+                    showMessage('Erreur: ' + data.error, 'error');
+                    return;
+                }
+                
+                signaturesData = data;
+                
+                // Update overview
+                document.getElementById('total-count').textContent = data.total_count;
+                document.getElementById('enabled-count').textContent = data.enabled_count;
+                document.getElementById('version').textContent = data.version || 'N/A';
+                document.getElementById('last-updated').textContent = data.last_updated || 'N/A';
+                document.getElementById('threshold-input').value = data.alert_threshold || 5;
+                
+                // Render signatures
+                renderSignatures(data.signatures);
+                
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('signatures-container').style.display = 'grid';
+                
+            } catch (error) {
+                console.error('Error loading signatures:', error);
+                showMessage('Erreur de chargement: ' + error.message, 'error');
+            }
+        }
+
+        function renderSignatures(signatures) {
+            const container = document.getElementById('signatures-container');
+            container.innerHTML = '';
+            
+            for (const [id, sig] of Object.entries(signatures)) {
+                const card = document.createElement('div');
+                card.className = `signature-card severity-${sig.severity} ${sig.enabled ? '' : 'disabled'}`;
+                
+                card.innerHTML = `
+                    <div class="signature-header">
+                        <div class="signature-title">
+                            <h3>${sig.name || id}</h3>
+                            <span class="category">${sig.category}</span>
+                            <span class="severity-badge severity-${sig.severity}">${sig.severity}</span>
+                        </div>
+                        ${isAdmin() ? `
+                        <label class="toggle-switch">
+                            <input type="checkbox" ${sig.enabled ? 'checked' : ''} 
+                                   onchange="toggleSignature('${id}')">
+                            <span class="slider"></span>
+                        </label>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="signature-details">
+                        <p>${sig.description}</p>
+                        <div class="regex-box">${escapeHtml(sig.regex)}</div>
+                        <p>
+                            <strong>Score de menace:</strong> 
+                            <span class="score-display">${sig.score}</span>
+                        </p>
+                        ${sig.exclude_ports && sig.exclude_ports.length > 0 ? 
+                            `<p><strong>Ports exclus:</strong> ${sig.exclude_ports.join(', ')}</p>` : ''}
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function isAdmin() {
+            return "{{ role }}" === "admin";
+        }
+
+        async function toggleSignature(signatureId) {
+            if (!isAdmin()) {
+                showMessage('Action réservée aux administrateurs', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/signatures/toggle/${signatureId}`, {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    showMessage('Erreur: ' + data.error, 'error');
+                    loadSignatures(); // Reload to reset toggle
+                    return;
+                }
+                
+                showMessage(`Signature ${data.enabled ? 'activée' : 'désactivée'}`, 'success');
+                loadSignatures(); // Reload to update UI
+                
+            } catch (error) {
+                showMessage('Erreur: ' + error.message, 'error');
+                loadSignatures();
+            }
+        }
+
+        async function updateThreshold() {
+            if (!isAdmin()) {
+                showMessage('Action réservée aux administrateurs', 'error');
+                return;
+            }
+            
+            const threshold = parseInt(document.getElementById('threshold-input').value);
+            
+            if (threshold < 1 || threshold > 20) {
+                showMessage('Le seuil doit être entre 1 et 20', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/signatures/update_threshold', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ threshold })
+                });
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    showMessage('Erreur: ' + data.error, 'error');
+                    return;
+                }
+                
+                showMessage('Seuil d\'alerte mis à jour avec succès', 'success');
+                
+            } catch (error) {
+                showMessage('Erreur: ' + error.message, 'error');
+            }
+        }
+
+        async function reloadSignatures() {
+            try {
+                const response = await fetch('/api/signatures/reload', {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    showMessage('Erreur: ' + data.error, 'error');
+                    return;
+                }
+                
+                showMessage(`${data.count} signatures rechargées`, 'success');
+                loadSignatures();
+                
+            } catch (error) {
+                showMessage('Erreur: ' + error.message, 'error');
+            }
+        }
+
+        // Load on page load
+        document.addEventListener('DOMContentLoaded', loadSignatures);
+    </script>
+</body>
+</html>

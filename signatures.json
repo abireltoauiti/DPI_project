@@ -1,0 +1,107 @@
+{
+  "version": "1.0",
+  "last_updated": "2024-01-15",
+  "alert_threshold": 4,
+  "signatures": {
+    "powershell_command": {
+      "name": "PowerShell Command Execution",
+      "description": "D\u00e9tecte les commandes PowerShell suspectes",
+      "regex": "powershell|ForEach-Object|char\\]\\$_|Invoke-Expression|IEX",
+      "score": 4,
+      "category": "command_execution",
+      "enabled": true,
+      "severity": "high"
+    },
+    "malicious_domain": {
+      "name": "Malicious Domain TLD",
+      "description": "D\u00e9tecte les domaines suspects avec TLDs suspects",
+      "regex": "\\.top|\\.xyz|\\.monster|\\.tk|\\.ml",
+      "score": 3,
+      "category": "malicious_infrastructure",
+      "enabled": true,
+      "severity": "medium"
+    },
+    "php_c2": {
+      "name": "PHP Command and Control",
+      "description": "D\u00e9tecte les communications C2 via PHP",
+      "regex": "GET\\s+/.+\\.php\\?cmd=|POST\\s+/.+\\.php",
+      "score": 5,
+      "category": "c2_communication",
+      "enabled": true,
+      "severity": "high"
+    },
+    "suspicious_user_agent": {
+      "name": "Suspicious User Agent",
+      "description": "D\u00e9tecte les User-Agents suspects",
+      "regex": "User-Agent:.*(PowerShell|curl|wget|python-requests)",
+      "score": 3,
+      "category": "suspicious_tool",
+      "enabled": true,
+      "severity": "medium"
+    },
+    "base64_payload": {
+      "name": "Base64 Encoded Payload",
+      "description": "D\u00e9tecte les payloads encod\u00e9s en base64 (HTTP uniquement)",
+      "regex": "[A-Za-z0-9+/]{150,}={0,2}",
+      "score": 1,
+      "category": "encoded_content",
+      "enabled": true,
+      "severity": "low",
+      "exclude_ports": [
+        443,
+        8443,
+        993,
+        995,
+        465,
+        587,
+        990,
+        989
+      ]
+    },
+    "large_dns_query": {
+      "name": "Large DNS Query (DNS Tunneling)",
+      "description": "D\u00e9tecte les requ\u00eates DNS anormalement longues",
+      "regex": "[a-z0-9]{50,}\\.",
+      "score": 6,
+      "category": "data_exfiltration",
+      "enabled": true,
+      "severity": "high"
+    },
+    "file_upload_pattern": {
+      "name": "Suspicious File Upload",
+      "description": "D\u00e9tecte les uploads de fichiers suspects",
+      "regex": "Content-Disposition:.*filename=.*\\.(zip|rar|7z|sql|db|tar|gz|bak)",
+      "score": 5,
+      "category": "data_exfiltration",
+      "enabled": true,
+      "severity": "high"
+    },
+    "sql_injection": {
+      "name": "SQL Injection Attack",
+      "description": "D\u00e9tecte les tentatives d'injection SQL",
+      "regex": "(union\\s+select|or\\s+1=1|;\\s*drop\\s+table|exec\\s*\\(|<script>)",
+      "score": 7,
+      "category": "injection_attack",
+      "enabled": true,
+      "severity": "critical"
+    },
+    "password_in_url": {
+      "name": "Password in URL",
+      "description": "D\u00e9tecte les mots de passe dans les URLs",
+      "regex": "(password|passwd|pwd)=[\\w\\d]{3,}",
+      "score": 4,
+      "category": "credential_leak",
+      "enabled": true,
+      "severity": "high"
+    },
+    "api_key_leak": {
+      "name": "API Key Leak",
+      "description": "D\u00e9tecte les fuites de cl\u00e9s API ou tokens",
+      "regex": "(api[_-]?key|token|secret)[\"']?\\s*[:=]\\s*[\"']?[\\w\\d]{20,}",
+      "score": 6,
+      "category": "credential_leak",
+      "enabled": true,
+      "severity": "critical"
+    }
+  }
+}

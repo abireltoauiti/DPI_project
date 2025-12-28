@@ -325,6 +325,160 @@ def stats_page():
     
     return render_template("stats.html", username=session["username"])
 
+# ADD THESE ROUTES TO YOUR app.py (after the existing routes)
+
+# ========== SIGNATURE MANAGEMENT API ==========
+
+@app.route("/api/signatures/list")
+def list_signatures():
+    """Get all signatures from JSON file"""
+    if "user_id" not in session:
+        return jsonify({'error': 'Not authenticated'}), 401
+    
+    try:
+        with open('signatures.json', 'r') as f:
+            data = json.load(f)
+        
+        return jsonify({
+            'version': data.get('version'),
+            'last_updated': data.get('last_updated'),
+            'alert_threshold': data.get('alert_threshold'),
+            'signatures': data.get('signatures', {}),
+            'total_count': len(data.get('signatures', {})),
+            'enabled_count': sum(1 for s in data.get('signatures', {}).values() if s.get('enabled', True))
+        })
+    except FileNotFoundError:
+        return jsonify({'error': 'signatures.json not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route("/api/signatures/reload", methods=["POST"])
+def reload_signatures_route():
+    """Reload signatures from JSON file"""
+    if "user_id" not in session:
+        return jsonify({'error': 'Not authenticated'}), 401
+    
+    try:
+        # Import the reload function
+        from dpi_improved import reload_signatures
+        
+        count = reload_signatures()
+        return jsonify({
+            'status': 'success',
+            'message': f'Reloaded {count} signatures',
+            'count': count
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route("/api/signatures/toggle/<signature_id>", methods=["POST"])
+def toggle_signature(signature_id):
+    """Enable/disable a specific signature"""
+    if "user_id" not in session or session.get("role") != "admin":
+        return jsonify({'error': 'Admin access required'}), 403
+    
+    try:
+        with open('signatures.json', 'r') as f:
+            data = json.load(f)
+        
+        if signature_id not in data['signatures']:
+            return jsonify({'error': 'Signature not found'}), 404
+        
+        # Toggle enabled status
+        current_status = data['signatures'][signature_id].get('enabled', True)
+        data['signatures'][signature_id]['enabled'] = not current_status
+        
+        # Save back to file
+        with open('signatures.json', 'w') as f:
+            json.dump(data, f, indent=2)
+        
+        # Reload signatures in DPI
+        from dpi_improved import reload_signatures
+        reload_signatures()
+        
+        return jsonify({
+            'status': 'success',
+            'signature_id': signature_id,
+            'enabled': not current_status
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route("/api/signatures/update_threshold", methods=["POST"])
+def update_threshold():
+    """Update the alert threshold"""
+    if "user_id" not in session or session.get("role") != "admin":
+        return jsonify({'error': 'Admin access required'}), 403
+    
+    try:
+        data = request.get_json()
+        new_threshold = int(data.get('threshold', 5))
+        
+        if new_threshold < 1 or new_threshold > 20:
+            return jsonify({'error': 'Threshold must be between 1 and 20'}), 400
+        
+        # Update JSON file
+        with open('signatures.json', 'r') as f:
+            sig_data = json.load(f)
+        
+        sig_data['alert_threshold'] = new_threshold
+        
+        with open('signatures.json', 'w') as f:
+            json.dump(sig_data, f, indent=2)
+        
+        # Reload signatures
+        from dpi_improved import reload_signatures
+        reload_signatures()
+        
+        return jsonify({
+            'status': 'success',
+            'new_threshold': new_threshold
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route("/signatures")
+def signatures_page():
+    """Signature management page"""
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+    
+    return render_template("signatures.html", 
+                         username=session["username"],
+                         role=session.get("role"))
+
+# ========== ADD THIS ROUTE TO YOUR app.py ==========
+# Add after the other API routes
+
+@app.route("/api/dpi/clear", methods=["POST"])
+def clear_data():
+    """Clear all collected packet data"""
+    if "user_id" not in session:
+        return jsonify({'error': 'Not authenticated'}), 401
+    
+    try:
+        # Import packet_data from dpi_improved
+        from dpi_improved import packet_data, packet_stats
+        
+        # Clear packet data
+        packet_data.clear()
+        
+        # Reset stats
+        packet_stats['syn_count'].clear()
+        packet_stats['dns_queries'].clear()
+        packet_stats['upload_sizes'].clear()
+        packet_stats['connection_attempts'].clear()
+        
+        # Clear log file (optional)
+        with open('dpi_alerts.log', 'w') as f:
+            f.write(f"=== Logs cleared at {datetime.now()} ===\n\n")
+        
+        return jsonify({
+            'status': 'success',
+            'message': 'Toutes les données ont été effacées'
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 # ========== LOGOUT ==========
 @app.route("/logout")
 def logout():
@@ -351,5 +505,3 @@ if __name__ == "__main__":
     print("="*60)
     
     app.run(debug=True, host='0.0.0.0', port=5000)
-abir@abir-virtual-machine:~/dpi_project$ 
-

@@ -47,6 +47,42 @@
             font-size: 14px;
         }
         
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .nav-btn {
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .nav-btn.primary {
+            background: #2196F3;
+            border-color: #2196F3;
+        }
+        
+        .nav-btn.primary:hover {
+            background: #1976D2;
+        }
+        
         .controls {
             background: rgba(255,255,255,0.05);
             padding: 25px;
@@ -94,6 +130,7 @@
             display: flex;
             gap: 10px;
             margin-top: 15px;
+            flex-wrap: wrap;
         }
         
         .btn {
@@ -137,9 +174,19 @@
             background: #0b7dda;
         }
         
+        .btn-danger {
+            background: #FF5722;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #E64A19;
+        }
+        
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+            transform: none !important;
         }
         
         .stats-grid {
@@ -256,6 +303,7 @@
             margin-top: 30px;
             display: flex;
             gap: 15px;
+            flex-wrap: wrap;
         }
         
         .links a {
@@ -280,6 +328,15 @@
             <span class="user-badge">{{ role }}</span>
             <a href="/logout" style="color: #f44336; text-decoration: none;">Déconnexion</a>
         </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+        <a href="/signatures" class="nav-btn primary">🔧 Gestion des Signatures</a>
+        {% if role == 'admin' %}
+        <a href="/admin/logs" class="nav-btn">📜 Logs Complets</a>
+        {% endif %}
+        <a href="/stats" class="nav-btn">📊 Statistiques</a>
     </div>
 
     <!-- DPI Controls -->
@@ -307,17 +364,13 @@
                     <option value="suspicious">Ports suspects</option>
                 </select>
             </div>
-            
-            <div class="control-group">
-                <label for="packet_limit">Limite de paquets (0 = illimité)</label>
-                <input type="number" id="packet_limit" value="0" min="0">
-            </div>
         </div>
         
         <div class="btn-group">
             <button class="btn btn-start" id="btn-start" onclick="startDPI()">▶️ Démarrer le Scan</button>
             <button class="btn btn-stop" id="btn-stop" onclick="stopDPI()" disabled>⏹️ Arrêter le Scan</button>
             <button class="btn btn-secondary" onclick="generateReport()">📊 Générer Rapport</button>
+            <button class="btn btn-danger" onclick="clearData()">🗑️ Effacer les Données</button>
         </div>
     </div>
 
@@ -351,9 +404,6 @@
 
     <!-- Links -->
     <div class="links">
-        {% if role == 'admin' %}
-        <a href="/admin/logs">📜 Voir les logs complets</a>
-        {% endif %}
         <a href="/api/dpi/report/download">💾 Télécharger le rapport</a>
         <a href="/api/dpi/logs/download">📥 Télécharger les logs</a>
     </div>
@@ -444,7 +494,6 @@
         async function startDPI() {
             const interface_val = document.getElementById('interface').value;
             const filter = document.getElementById('filter').value;
-            const packet_limit = document.getElementById('packet_limit').value;
             
             try {
                 const response = await fetch('/start_dpi', {
@@ -453,7 +502,7 @@
                     body: JSON.stringify({
                         interface: interface_val,
                         filter: filter,
-                        packet_limit: parseInt(packet_limit)
+                        packet_limit: 0  // Always unlimited
                     })
                 });
                 
@@ -501,10 +550,38 @@
                 const response = await fetch('/api/dpi/report');
                 const data = await response.json();
                 
-                alert(`Rapport généré!\n\nTotal: ${data.summary.total_packets} paquets\nCritiques: ${data.summary.critical_alerts}`);
+                if (data.error) {
+                    alert('Aucune donnée à analyser');
+                    return;
+                }
+                
+                alert(`Rapport généré!\n\nTotal: ${data.summary.total_packets} paquets\nCritiques: ${data.summary.critical_alerts}\nAvertissements: ${data.summary.warnings}`);
                 
             } catch (error) {
                 alert('Erreur lors de la génération du rapport: ' + error);
+            }
+        }
+        
+        // Clear data
+        async function clearData() {
+            if (!confirm('Êtes-vous sûr de vouloir effacer toutes les données collectées?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/dpi/clear', {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                alert(data.message || 'Données effacées');
+                
+                // Reset display
+                updateStats();
+                updateAlerts();
+                
+            } catch (error) {
+                alert('Erreur: ' + error);
             }
         }
         

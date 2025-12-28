@@ -1,4 +1,4 @@
-from scapy.all import sniff, Raw, IP, TCP, UDP, DNS, ICMP, rdpcap
+from scapy.all import sniff, Raw, IP, TCP, UDP, DNS, ICMP
 import re
 from datetime import datetime
 import base64
@@ -8,79 +8,93 @@ import json
 import threading
 from queue import Queue
 from collections import defaultdict
-import signal
-import sys
+import os
 
-# ========== IMPROVEMENT 1: ENHANCED SIGNATURES ==========
-SIGNATURES = {
-    "powershell_command": {
-        "regex": r"powershell|ForEach-Object|char\]\$_|Invoke-Expression|IEX",
-        "score": 4,
-        "category": "command_execution"
-    },
-    "malicious_domain": {
-        "regex": r"\.top|\.xyz|\.monster|\.tk|\.ml",
-        "score": 3,
-        "category": "malicious_infrastructure"
-    },
-    "php_c2": {
-        "regex": r"GET\s+/.+\.php\?cmd=|POST\s+/.+\.php",
-        "score": 5,
-        "category": "c2_communication"
-    },
-    "suspicious_user_agent": {
-        "regex": r"User-Agent:.*(PowerShell|curl|wget|python-requests)",
-        "score": 3,
-        "category": "suspicious_tool"
-    },
-    "base64_payload": {
-        "regex": r"[A-Za-z0-9+/]{100,}={0,2}",
-        "score": 1,
-        "category": "encoded_content"
-    },
-    "large_dns_query": {
-        "regex": r"[a-z0-9]{50,}\.",
-        "score": 6,
-        "category": "data_exfiltration"
-    },
-    "file_upload_pattern": {
-        "regex": r"Content-Disposition:.*filename=.*\.(zip|rar|7z|sql|db|tar|gz|bak)",
-        "score": 5,
-        "category": "data_exfiltration"
-    },
-    "sql_injection": {
-        "regex": r"(union\s+select|or\s+1=1|;\s*drop\s+table|exec\s*\(|<script>)",
-        "score": 7,
-        "category": "injection_attack"
-    },
-    "password_in_url": {
-        "regex": r"(password|passwd|pwd)=[\w\d]{3,}",
-        "score": 4,
-        "category": "credential_leak"
-    },
-    "api_key_leak": {
-        "regex": r"(api[_-]?key|token|secret)[\"']?\s*[:=]\s*[\"']?[\w\d]{20,}",
-        "score": 6,
-        "category": "credential_leak"
-    }
-}
-
-ALERT_THRESHOLD = 5
+# ========== CONFIGURATION ==========
+SIGNATURE_FILE = "signatures.json"
 LOGFILE = "dpi_alerts.log"
 REPORT_FILE = "dpi_report.json"
 
-# ========== IMPROVEMENT 2: PACKET DATA STORAGE ==========
+# ========== IMPROVEMENT 1: Smart Signature Loading ==========
+def load_signatures(filepath=SIGNATURE_FILE):
+    """Load signatures from JSON file with validation and port filtering"""
+    try:
+        if not os.path.exists(filepath):
+            print(f"⚠️  Warning: {filepath} not found, using default signatures")
+            return get_default_signatures()
+        
+        with open(filepath, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        signatures = {}
+        enabled_count = 0
+        disabled_count = 0
+        
+        for sig_id, sig_data in data.get('signatures', {}).items():
+            if sig_data.get('enabled', True):
+                signatures[sig_id] = {
+                    'regex': sig_data['regex'],
+                    'score': sig_data['score'],
+                    'category': sig_data['category'],
+                    'severity': sig_data.get('severity', 'medium'),
+                    'name': sig_data.get('name', sig_id),
+                    'exclude_ports': sig_data.get('exclude_ports', [])
+                }
+                enabled_count += 1
+            else:
+                disabled_count += 1
+        
+        alert_threshold = data.get('alert_threshold', 5)
+        
+        print(f"✅ Loaded {enabled_count} signatures from {filepath}")
+        if disabled_count > 0:
+            print(f"   ({disabled_count} signatures disabled)")
+        
+        return signatures, alert_threshold
+    
+    except json.JSONDecodeError as e:
+        print(f"❌ Error parsing {filepath}: {e}")
+        print("   Using default signatures")
+        return get_default_signatures()
+    except Exception as e:
+        print(f"❌ Error loading signatures: {e}")
+        return get_default_signatures()
+
+def get_default_signatures():
+    """Fallback default signatures if JSON fails"""
+    return {
+        "sql_injection": {
+            "regex": r"(union\s+select|or\s+1=1|;\s*drop\s+table)",
+            "score": 7,
+            "category": "injection_attack",
+            "severity": "critical",
+            "name": "SQL Injection",
+            "exclude_ports": []
+        }
+    }, 5
+
+# Load signatures globally
+SIGNATURES, ALERT_THRESHOLD = load_signatures()
+
+def reload_signatures():
+    """Reload signatures from JSON (can be called at runtime)"""
+    global SIGNATURES, ALERT_THRESHOLD
+    SIGNATURES, ALERT_THRESHOLD = load_signatures()
+    print(f"🔄 Signatures reloaded. Active: {len(SIGNATURES)}, Threshold: {ALERT_THRESHOLD}")
+    return len(SIGNATURES)
+
+# ========== PACKET DATA STORAGE ==========
 packet_data = []
 packet_stats = {
     'syn_count': defaultdict(int),
     'dns_queries': defaultdict(int),
-    'upload_sizes': defaultdict(int)
+    'upload_sizes': defaultdict(int),
+    'connection_attempts': defaultdict(int)  # NEW: Track connection patterns
 }
 
-# ========== FIX 1: INCREASE QUEUE SIZE ==========
-packet_queue = Queue(maxsize=5000)  # Increased from 1000 to 5000
+# ========== PERFORMANCE OPTIMIZATION ==========
+packet_queue = Queue(maxsize=1000)
 is_running = False
-sniff_thread = None
 
 def is_printable(s):
     """Check if string is mostly printable"""
@@ -97,7 +111,7 @@ def format_payload(payload_bytes):
     except Exception:
         return f"[BASE64] {base64.b64encode(payload_bytes[:100]).decode()}..."
 
-# ========== IMPROVEMENT 4: PROTOCOL-LEVEL ANALYSIS ==========
+# ========== IMPROVEMENT 2: Enhanced Protocol Analysis ==========
 def analyse_protocol_behavior(packet):
     """Detect protocol-level anomalies and exfiltration attempts"""
     anomalies = []
@@ -105,51 +119,66 @@ def analyse_protocol_behavior(packet):
     
     # TCP Analysis
     if packet.haslayer(TCP):
-        if packet[TCP].flags == 'S':
-            src_ip = packet[IP].src if packet.haslayer(IP) else 'unknown'
-            packet_stats['syn_count'][src_ip] += 1
-            if packet_stats['syn_count'][src_ip] > 50:
-                anomalies.append("potential_syn_flood")
-                score_bonus += 4
+        src_ip = packet[IP].src if packet.haslayer(IP) else 'unknown'
+        dst_port = packet[TCP].dport
         
-        sensitive_ports = [22, 23, 3389, 445, 1433, 3306]
-        if packet[TCP].dport in sensitive_ports:
-            anomalies.append(f"sensitive_port_access:{packet[TCP].dport}")
+        # SYN flood detection
+        if packet[TCP].flags == 'S':
+            packet_stats['syn_count'][src_ip] += 1
+            if packet_stats['syn_count'][src_ip] > 100:  # Increased threshold
+                anomalies.append("potential_syn_flood")
+                score_bonus += 5
+        
+        # Sensitive port access
+        sensitive_ports = {
+            22: "SSH", 23: "Telnet", 3389: "RDP", 
+            445: "SMB", 1433: "MSSQL", 3306: "MySQL"
+        }
+        if dst_port in sensitive_ports:
+            anomalies.append(f"sensitive_port:{sensitive_ports[dst_port]}")
             score_bonus += 2
+            
+        # Port scanning detection (NEW)
+        packet_stats['connection_attempts'][src_ip] += 1
+        if packet_stats['connection_attempts'][src_ip] > 50:
+            anomalies.append("potential_port_scan")
+            score_bonus += 4
     
-    # FIX 2: DNS Analysis only on port 53
-    if packet.haslayer(DNS) and packet[DNS].qr == 0:
-        if packet.haslayer(UDP) and packet[UDP].dport == 53:
-            try:
-                query = packet[DNS].qd.qname.decode()
-                if len(query) > 50:
-                    anomalies.append("dns_tunneling_suspicious_length")
-                    score_bonus += 6
-                
-                src_ip = packet[IP].src if packet.haslayer(IP) else 'unknown'
-                packet_stats['dns_queries'][src_ip] += 1
-                if packet_stats['dns_queries'][src_ip] > 100:
-                    anomalies.append("excessive_dns_queries")
-                    score_bonus += 3
-            except:
-                pass
+    # DNS Analysis - Tunneling Detection
+    if packet.haslayer(DNS) and packet[DNS].qr == 0:  # DNS query
+        try:
+            query = packet[DNS].qd.qname.decode()
+            src_ip = packet[IP].src if packet.haslayer(IP) else 'unknown'
+            
+            # Only flag VERY long queries (reduced false positives)
+            if len(query) > 80:  # Increased from 50
+                anomalies.append(f"dns_tunneling_length:{len(query)}")
+                score_bonus += 7
+            
+            # Track DNS query frequency
+            packet_stats['dns_queries'][src_ip] += 1
+            if packet_stats['dns_queries'][src_ip] > 200:  # Increased threshold
+                anomalies.append("excessive_dns_queries")
+                score_bonus += 4
+        except:
+            pass
     
-    # ICMP Tunneling
+    # ICMP Tunneling - Data in ping packets
     if packet.haslayer(ICMP) and packet.haslayer(Raw):
         payload_size = len(packet[Raw].load)
-        if payload_size > 56:
-            anomalies.append(f"icmp_data_exfiltration:{payload_size}_bytes")
-            score_bonus += 5
+        if payload_size > 100:  # Increased from 56 for real threats
+            anomalies.append(f"icmp_exfiltration:{payload_size}b")
+            score_bonus += 6
     
-    # Large upload detection
+    # Large upload detection (potential exfiltration)
     if packet.haslayer(TCP) and packet.haslayer(Raw):
-        if packet[TCP].dport in [80, 443, 8080]:
+        if packet[TCP].dport in [80, 443, 8080]:  # HTTP/HTTPS
             payload_size = len(packet[Raw].load)
-            if payload_size > 10000:
+            if payload_size > 50000:  # Increased from 10KB to 50KB
                 src_ip = packet[IP].src if packet.haslayer(IP) else 'unknown'
                 packet_stats['upload_sizes'][src_ip] += payload_size
-                anomalies.append(f"large_upload:{payload_size}_bytes")
-                score_bonus += 4
+                anomalies.append(f"large_upload:{payload_size//1000}KB")
+                score_bonus += 5
     
     return anomalies, score_bonus
 
@@ -172,6 +201,7 @@ def log_alert(payload, score, signature_name, packet_info, anomalies):
         f.write(f"\nPayload Preview:\n{payload[:500]}\n")
         f.write("="*50 + "\n\n")
 
+# ========== IMPROVEMENT 3: Smart Packet Analysis ==========
 def analyse(packet):
     """Main analysis function with comprehensive inspection"""
     if not packet.haslayer(Raw):
@@ -191,28 +221,31 @@ def analyse(packet):
         'payload_size': len(payload_bytes)
     }
     
-    # FIX 3: Ignore base64 in HTTPS traffic
-    if packet.haslayer(TCP):
-        dst_port = packet[TCP].dport
-        src_port = packet[TCP].sport
-        
-        if dst_port in [443, 8443] or src_port in [443, 8443]:
-            signatures_to_check = {k: v for k, v in SIGNATURES.items() if k != "base64_payload"}
-        else:
-            signatures_to_check = SIGNATURES
-    else:
-        signatures_to_check = SIGNATURES
-    
-    # ========== SIGNATURE MATCHING ==========
+    # ========== SIGNATURE MATCHING WITH PORT EXCLUSIONS ==========
     total_score = 0
     matched_signatures = []
     matched_categories = set()
     
-    for name, sig in signatures_to_check.items():
-        if re.search(sig["regex"], payload_formatted, re.IGNORECASE):
-            total_score += sig["score"]
-            matched_signatures.append(name)
-            matched_categories.add(sig["category"])
+    dst_port = packet_info['dst_port']
+    src_port = packet_info['src_port']
+    
+    for name, sig in SIGNATURES.items():
+        # Check port exclusions (both source and destination)
+        exclude_ports = sig.get('exclude_ports', [])
+        if dst_port != 'N/A' and dst_port in exclude_ports:
+            continue
+        if src_port != 'N/A' and src_port in exclude_ports:
+            continue
+        
+        # Match signature
+        try:
+            if re.search(sig["regex"], payload_formatted, re.IGNORECASE):
+                total_score += sig["score"]
+                matched_signatures.append(name)
+                matched_categories.add(sig["category"])
+        except re.error:
+            # Skip malformed regex
+            continue
     
     # ========== PROTOCOL-LEVEL ANALYSIS ==========
     anomalies, protocol_score = analyse_protocol_behavior(packet)
@@ -228,28 +261,34 @@ def analyse(packet):
     })
     packet_data.append(packet_info)
     
-    # ========== THREAT RESPONSE ==========
+    # ========== IMPROVEMENT 4: Better Console Output ==========
     if total_score == 0 and not anomalies:
-        # Don't print OK messages to reduce console spam
+        # Only print every 100 clean packets to reduce spam
+        if len(packet_data) % 100 == 0:
+            print(f"[OK] {len(packet_data)} packets analyzed... (last: {packet_info['src_ip']} → {packet_info['dst_ip']})")
         return {"status": "ok", "packet_info": packet_info}
     
     if total_score < ALERT_THRESHOLD:
-        print(f"\033[93m[WARNING] Score={total_score} | {matched_signatures} | {anomalies}\033[0m")
+        print(f"\033[93m[⚠️  WARNING] Score={total_score} | {', '.join(matched_signatures[:3])} | {packet_info['src_ip']} → {packet_info['dst_ip']}\033[0m")
         return {"status": "warning", "score": total_score, "signatures": matched_signatures, 
                 "anomalies": anomalies, "packet_info": packet_info}
     
     # CRITICAL ALERT
-    print(f"\033[91m[🚨 CRITICAL ALERT 🚨] Score={total_score}\033[0m")
-    print(f"  Signatures: {matched_signatures}")
-    print(f"  Anomalies: {anomalies}")
+    print(f"\n\033[91m{'='*60}\033[0m")
+    print(f"\033[91m🚨 CRITICAL ALERT 🚨 Score={total_score}\033[0m")
+    print(f"\033[91m{'='*60}\033[0m")
+    print(f"  Signatures: {', '.join(matched_signatures)}")
+    if anomalies:
+        print(f"  Anomalies: {', '.join(anomalies)}")
     print(f"  {packet_info['src_ip']}:{packet_info['src_port']} → {packet_info['dst_ip']}:{packet_info['dst_port']}")
+    print(f"\033[91m{'='*60}\033[0m\n")
     
     log_alert(payload_formatted, total_score, ', '.join(matched_signatures), packet_info, anomalies)
     
     return {"status": "critical", "score": total_score, "signatures": matched_signatures,
             "anomalies": anomalies, "packet_info": packet_info, "payload": payload_formatted[:200]}
 
-# ========== IMPROVEMENT 5: REPORT GENERATION ==========
+# ========== REPORT GENERATION ==========
 def generate_report():
     """Generate comprehensive analysis report using pandas"""
     if not packet_data:
@@ -257,14 +296,29 @@ def generate_report():
     
     df = pd.DataFrame(packet_data)
     
+    # Calculate statistics
+    total_packets = len(df)
+    clean = len(df[df['threat_level'] == 'ok'])
+    warnings = len(df[df['threat_level'] == 'warning'])
+    critical = len(df[df['threat_level'] == 'critical'])
+    
     report = {
         'generated_at': datetime.now().isoformat(),
+        'configuration': {
+            'alert_threshold': ALERT_THRESHOLD,
+            'active_signatures': len(SIGNATURES),
+            'signature_file': SIGNATURE_FILE
+        },
         'summary': {
-            'total_packets': len(df),
-            'clean_packets': len(df[df['threat_level'] == 'ok']),
-            'warnings': len(df[df['threat_level'] == 'warning']),
-            'critical_alerts': len(df[df['threat_level'] == 'critical']),
+            'total_packets': total_packets,
+            'clean_packets': clean,
+            'clean_percentage': round((clean/total_packets)*100, 2),
+            'warnings': warnings,
+            'warning_percentage': round((warnings/total_packets)*100, 2),
+            'critical_alerts': critical,
+            'critical_percentage': round((critical/total_packets)*100, 2),
             'total_threat_score': int(df['threat_score'].sum()),
+            'avg_threat_score': round(df['threat_score'].mean(), 2),
             'avg_payload_size': int(df['payload_size'].mean())
         },
         'top_threats': {
@@ -275,7 +329,7 @@ def generate_report():
         },
         'protocol_analysis': {
             'distribution': df['protocol'].value_counts().to_dict(),
-            'avg_score_by_protocol': df.groupby('protocol')['threat_score'].mean().to_dict()
+            'avg_score_by_protocol': df.groupby('protocol')['threat_score'].mean().round(2).to_dict()
         },
         'timeline': {
             'hourly_threats': df[df['threat_score'] > 0].groupby(
@@ -284,6 +338,7 @@ def generate_report():
         }
     }
     
+    # Category analysis
     all_categories = []
     for cats in df[df['categories'] != 'none']['categories']:
         all_categories.extend(cats.split(','))
@@ -291,18 +346,23 @@ def generate_report():
         from collections import Counter
         report['top_threats']['category_distribution'] = dict(Counter(all_categories).most_common(5))
     
+    # Save report
     with open(REPORT_FILE, 'w') as f:
         json.dump(report, f, indent=2, default=str)
     
     print(f"\n📊 Report generated: {REPORT_FILE}")
+    print(f"   Total packets: {total_packets}")
+    print(f"   Clean: {clean} ({report['summary']['clean_percentage']}%)")
+    print(f"   Warnings: {warnings} ({report['summary']['warning_percentage']}%)")
+    print(f"   Critical: {critical} ({report['summary']['critical_percentage']}%)")
+    
     return report
 
-# ========== IMPROVEMENT 6: THREADING FOR PERFORMANCE ==========
+# ========== THREADING FOR PERFORMANCE ==========
 def packet_handler(packet):
     """Quick capture - just queue it for async processing"""
     if not packet_queue.full():
         packet_queue.put(packet)
-    # Removed the else print to reduce console spam
 
 def packet_processor():
     """Separate thread for packet analysis"""
@@ -315,7 +375,7 @@ def packet_processor():
         except:
             continue
 
-# ========== IMPROVEMENT 7: EFFICIENT SCAPY FILTERS ==========
+# ========== EFFICIENT SCAPY FILTERS ==========
 BPF_FILTERS = {
     'all': 'ip',
     'web': 'tcp port 80 or tcp port 443',
@@ -325,49 +385,36 @@ BPF_FILTERS = {
     'suspicious': 'tcp portrange 1024-65535'
 }
 
-# FIX 4: Better stop mechanism
-def stop_dpi():
-    """Stop the DPI capture properly"""
-    global is_running
-    print("\n🛑 Stopping DPI...")
-    is_running = False
-    
-    # Wait for queue to empty
-    if not packet_queue.empty():
-        print("⏳ Processing remaining packets...")
-        packet_queue.join()
-    
-    generate_report()
-    print("✅ DPI stopped successfully")
-
 def start_dpi(iface="ens33", packet_count=0, filter_name='all', callback=None):
     """Launch DPI with optimized filtering and threading"""
-    global is_running, sniff_thread
+    global is_running
     is_running = True
+    
+    # Reload signatures before starting
+    reload_signatures()
     
     # Start analysis thread
     processor_thread = threading.Thread(target=packet_processor, daemon=True)
     processor_thread.start()
     
+    # Get BPF filter
     bpf_filter = BPF_FILTERS.get(filter_name, 'ip')
     
     print(f"\n🔵 DPI Started")
     print(f"   Interface: {iface}")
     print(f"   Filter: {filter_name} ({bpf_filter})")
     print(f"   Packet limit: {packet_count if packet_count > 0 else 'unlimited'}")
+    print(f"   Signatures: {len(SIGNATURES)} active")
     print(f"   Threat threshold: {ALERT_THRESHOLD}")
-    print(f"   Queue size: {packet_queue.maxsize}")
     print("-" * 50)
     
     try:
-        # FIX 5: Add stop_filter to properly stop sniffing
         sniff(
             iface=iface,
             prn=packet_handler,
             filter=bpf_filter,
             store=0,
-            count=packet_count,
-            stop_filter=lambda x: not is_running  # Stop when is_running becomes False
+            count=packet_count
         )
     except KeyboardInterrupt:
         print("\n\n🛑 DPI Stopped by user")
@@ -377,12 +424,22 @@ def start_dpi(iface="ens33", packet_count=0, filter_name='all', callback=None):
         generate_report()
         print("✅ DPI session complete")
 
+def stop_dpi():
+    """Stop the DPI capture"""
+    global is_running
+    is_running = False
+    generate_report()
+
 # ========== PCAP FILE ANALYSIS ==========
 def analyse_pcap_file(pcap_file, callback=None):
     """Analyse a PCAP file instead of live traffic"""
+    from scapy.all import rdpcap
+    
     print("\n" + "="*60)
     print(f"📂 Analyse du fichier PCAP: {pcap_file}")
     print("="*60)
+    
+    reload_signatures()
     
     try:
         print("⏳ Chargement des paquets...")
@@ -435,18 +492,18 @@ def analyse_pcap_file(pcap_file, callback=None):
 
 # ========== MAIN EXECUTION ==========
 if __name__ == "__main__":
+    import sys
+    
     print("="*60)
-    print("🛡️  Deep Packet Inspection Tool")
+    print("🛡️  Deep Packet Inspection Tool - Optimized")
     print("="*60)
     
-    # Check if analyzing a PCAP file
     if len(sys.argv) > 1 and (sys.argv[1].endswith('.pcap') or sys.argv[1].endswith('.pcapng')):
         pcap_file = sys.argv[1]
         print(f"Mode: Analyse de fichier PCAP")
         print(f"Fichier: {pcap_file}\n")
         analyse_pcap_file(pcap_file)
     else:
-        # Live capture mode
         iface = sys.argv[1] if len(sys.argv) > 1 else "ens33"
         filter_type = sys.argv[2] if len(sys.argv) > 2 else "all"
         
