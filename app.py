@@ -268,6 +268,39 @@ def recent_alerts():
         'count': len(alerts)
     })
 
+# ========== NEW: ALL PACKETS API ==========
+@app.route("/api/dpi/packets")
+def all_packets():
+    """Return all captured packets (with limit)"""
+    if "user_id" not in session:
+        return jsonify({'error': 'Not authenticated'}), 401
+
+    limit = int(request.args.get("limit", 100))
+    offset = int(request.args.get("offset", 0))
+
+    total = len(packet_data)
+    sliced = packet_data[offset:offset + limit]
+
+    return jsonify({
+        "total": total,
+        "count": len(sliced),
+        "packets": [
+            {
+                "timestamp": p["timestamp"].isoformat() if p.get("timestamp") else None,
+                "src_ip": p.get("src_ip"),
+                "dst_ip": p.get("dst_ip"),
+                "protocol": p.get("protocol"),
+                "src_port": p.get("src_port"),
+                "dst_port": p.get("dst_port"),
+                "payload_size": p.get("payload_size"),
+                "threat_level": p.get("threat_level"),
+                "threat_score": p.get("threat_score")
+            }
+            for p in sliced
+        ]
+    })
+
+
 @app.route("/api/dpi/report")
 def get_report():
     """Generate and return full pandas report"""
@@ -328,6 +361,13 @@ def stats_page():
 # ADD THESE ROUTES TO YOUR app.py (after the existing routes)
 
 # ========== SIGNATURE MANAGEMENT API ==========
+
+
+@app.route("/dpi/packets")
+def packets_page():
+    if "user_id" not in session:
+        return redirect("/login")
+    return render_template("packets.html")
 
 @app.route("/api/signatures/list")
 def list_signatures():

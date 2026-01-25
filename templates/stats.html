@@ -41,6 +41,7 @@
     </div>
 
     <script>
+        console.log("Chart =", typeof Chart);
         async function loadCharts() {
             const response = await fetch('/api/dpi/stats');
             const data = await response.json();
@@ -67,7 +68,7 @@
                     labels: ['Total Menaces cumulées'],
                     datasets: [{
                         label: 'Score de risque total',
-                        data: [data.score],
+                        data: [data.threat_score_total],
                         backgroundColor: '#2196F3'
                     }]
                 },

@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "last_updated": "2024-01-15",
-  "alert_threshold": 4,
+  "alert_threshold": 3,
   "signatures": {
     "powershell_command": {
       "name": "PowerShell Command Execution",

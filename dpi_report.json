@@ -1,77 +1,59 @@
 {
-  "generated_at": "2025-12-28T21:40:53.375223",
+  "generated_at": "2026-01-25T19:38:30.390828",
   "configuration": {
-    "alert_threshold": 4,
+    "alert_threshold": 3,
     "active_signatures": 10,
     "signature_file": "signatures.json"
   },
   "summary": {
-    "total_packets": 9993,
-    "clean_packets": 305,
-    "clean_percentage": 3.05,
-    "warnings": 9428,
-    "warning_percentage": 94.35,
-    "critical_alerts": 260,
-    "critical_percentage": 2.6,
-    "total_threat_score": 39366,
-    "avg_threat_score": 3.94,
-    "avg_payload_size": 1311
+    "total_packets": 1005,
+    "clean_packets": 195,
+    "clean_percentage": 19.4,
+    "warnings": 0,
+    "warning_percentage": 0.0,
+    "critical_alerts": 810,
+    "critical_percentage": 80.6,
+    "total_threat_score": 3272,
+    "avg_threat_score": 3.26,
+    "avg_payload_size": 1165
   },
   "top_threats": {
     "sources": {
-      "5.161.113.150": 9234,
-      "167.71.107.109": 231,
-      "10.2.21.101": 202,
-      "192.168.61.129": 16,
-      "151.101.129.91": 1,
-      "34.149.117.202": 1,
-      "34.107.243.93": 1,
-      "49.13.65.235": 1,
-      "34.120.208.123": 1
+      "72.52.136.210": 638,
+      "66.135.17.87": 140,
+      "10.2.21.101": 30,
+      "192.168.61.129": 2
     },
     "destinations": {
-      "10.2.21.101": 9466,
-      "5.161.113.150": 193,
-      "192.178.202.95": 6,
-      "192.168.61.129": 4,
-      "34.36.137.203": 4,
-      "34.117.186.192": 3,
-      "34.107.243.93": 3,
-      "167.71.107.109": 2,
-      "34.120.208.123": 1,
-      "66.135.17.87": 1
+      "10.2.21.101": 778,
+      "66.135.17.87": 21,
+      "72.52.136.210": 5,
+      "45.59.170.106": 4,
+      "151.101.1.91": 1,
+      "167.82.29.229": 1
     },
     "signature_frequency": {
-      "powershell_command": 185,
-      "large_dns_query": 8,
-      "base64_payload": 7,
-      "powershell_command,base64_payload": 4,
-      "powershell_command,malicious_domain,suspicious_user_agent": 2,
-      "malicious_domain": 1
+      "large_dns_query": 6,
+      "powershell_command": 3
     },
     "category_distribution": {
-      "command_execution": 191,
-      "encoded_content": 11,
-      "data_exfiltration": 8,
-      "malicious_infrastructure": 3,
-      "suspicious_tool": 2
+      "data_exfiltration": 6,
+      "command_execution": 3
     }
   },
   "protocol_analysis": {
     "distribution": {
-      "TCP": 9901,
-      "UDP": 86,
-      "OTHER": 6
+      "TCP": 984,
+      "UDP": 21
     },
     "avg_score_by_protocol": {
-      "OTHER": 0.0,
-      "TCP": 3.98,
-      "UDP": 0.0
+      "TCP": 3.32,
+      "UDP": 0.29
     }
   },
   "timeline": {
     "hourly_threats": {
-      "21": 9688
+      "19": 810
     }
   }
 }
